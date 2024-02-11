@@ -7,11 +7,55 @@
 # 3. generate slot lines & reels -> prize
 # 4. add the prize back to the balance
 
+import random 
+
 MAX_LINES = 3 # constant
 MAX_BET = 100
 MIN_BET = 1
+
+ROWS = 3
+COLS = 3
+
+#dictionary
+symbol_count = {
+    "A": 2,
+    "B": 4,
+    "C": 6,
+    "D": 8
+}
+
+# random selection
+# create a list of all values we could select from -> random choose 3 values
+# remove from a list -> do again
+def get_slot_machine_spin(rows, cols, symbols): #3 parameters that we pass in the function
+    all_symbols = [] #list
+    for symbol, symbol_count in symbols.items(): #iterate through dict 
+        # give u keys & values assoc w/ dict
+        # symbol = key, symbol_count = value
+        for _ in range(symbol_count): #Use _ :control the loop iterations and its specific value doesn't matter.
+            all_symbols.append(symbol)
+        #example: loop through key A with val 2 in the dict 
+            # 2nd for loop through key 2 times (symbol_count) and add another
+            # A into all_symbols list
+    
+    # select values that go in each col:
+    columns = [] #define columns list
+    for _ in range(cols): #generate column for every columns we have
+        column = [] # 1 column
+        current_symbols = all_symbols[:] # current symbols = copy of all symbols list
+        for _ in range(rows): #loop through num values = num of rows
+            value = random.choice(current_symbols) # 1st value = rand choice
+            current_symbols.remove(value) # remove values so we dont pick again
+            column.append(value) # add value to our column
+        
+        columns.append(column) # add new column to columns
+
+    return columns
+
+
+
 def deposit():
-    while True: 
+    while True:
         amount = input("What would you like to deposit? $")
         if amount.isdigit():
             amount = int(amount)
